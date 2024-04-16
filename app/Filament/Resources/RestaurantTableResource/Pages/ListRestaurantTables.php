@@ -17,4 +17,9 @@ class ListRestaurantTables extends ListRecords
                 ->label('Nova Mesa'),
         ];
     }
+
+    public function getBreadcrumb(): ?string
+    {
+        return static::$breadcrumb ?? __('Mesas');
+    }
 }

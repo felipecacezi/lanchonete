@@ -32,15 +32,15 @@ class RestaurantTableResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('restaurant_tables_name')
+                Forms\Components\TextInput::make('restaurant_table_name')
                     ->label('Nome')
                     ->required()
                     ->maxLength(50),
-                Forms\Components\TextInput::make('restaurant_tables_code')
+                Forms\Components\TextInput::make('restaurant_table_code')
                     ->label('Codigo')
                     ->required()
                     ->maxLength(4),
-                Toggle::make('restaurant_tables_active')
+                Toggle::make('restaurant_table_active')
                     ->label('Ativo')
                     ->onColor('success')
                     ->offColor('danger')
@@ -53,10 +53,10 @@ class RestaurantTableResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('restaurant_tables_name')
+                Tables\Columns\TextColumn::make('restaurant_table_name')
                     ->label('Nome')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('restaurant_tables_code')
+                Tables\Columns\TextColumn::make('restaurant_table_code')
                     ->label('Codigo')
                     ->searchable()
             ])

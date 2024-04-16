@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\RestaurantTableResource\Pages;
+namespace App\Filament\Resources\ItemResource\Pages;
 
-use App\Filament\Resources\RestaurantTableResource;
+use App\Filament\Resources\ItemResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Actions\Action;
 use Illuminate\Support\Js;
 use Illuminate\Contracts\Support\Htmlable;
 
-class CreateRestaurantTable extends CreateRecord
+class CreateItem extends CreateRecord
 {
-    protected static string $resource = RestaurantTableResource::class;
+    protected static string $resource = ItemResource::class;
 
     protected function getFormActions(): array
     {
@@ -49,11 +49,11 @@ class CreateRestaurantTable extends CreateRecord
 
     public function getTitle(): string | Htmlable
     {
-        return __('Nova Mesa');
+        return __('Novo Item');
     }
 
     public function getBreadcrumb(): string
     {
-        return static::$breadcrumb ?? __('Nova Mesa');
+        return static::$breadcrumb ?? __('Novo Item');
     }
 }

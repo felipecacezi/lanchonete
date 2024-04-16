@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('restaurant_tables', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->string('restaurant_table_name', 50)->default('');
-            $table->string('restaurant_table_code', 4)->nullable(true);
-            $table->integer('restaurant_table_active')->default(1);
+            $table->string('supplier_name', 50);
+            $table->text('supplier_description');
+            $table->string('supplier_email', 50);
+            $table->string('supplier_phone', 12);
+            $table->string('supplier_address', 50);
+            $table->integer('supplier_active');
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('restaurant_tables');
+        Schema::dropIfExists('suppliers');
     }
 };
