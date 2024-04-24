@@ -18,4 +18,9 @@ class Category extends Model
         'cat_obs',
         'cat_active',
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }
