@@ -47,6 +47,18 @@ class ItemResource extends Resource
                     ->required()
                     ->label('Codigo')
                     ->maxLength(4),
+                Forms\Components\TextInput::make('item_quantity')
+                    ->integer()
+                    ->required()
+                    ->label('Quantidade'),
+                Forms\Components\TextInput::make('item_min_quantity')
+                    ->integer()
+                    ->required()
+                    ->label('Quantidade minima'),
+                Forms\Components\TextInput::make('item_max_quantity')
+                    ->integer()
+                    ->required()
+                    ->label('Quantidade maxima'),
                 Forms\Components\FileUpload::make('item_image')
                     ->image()
                     ->label('Imagem'),
@@ -89,12 +101,23 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('item_code')
                     ->label('Codigo')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('item_quantity')
+                    ->label('Qtd. Disp.')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('item_min_quantity')
+                    ->label('Qtd. Min.')
+                    ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('Editar'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Excluir')
+                    ->modalHeading('Atencao')
+                    ->modalDescription('Voce realmente deseja excluir essa categoria?'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
