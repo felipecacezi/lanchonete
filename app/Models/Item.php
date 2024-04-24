@@ -15,6 +15,9 @@ class Item extends Model
         'item_code',
         'item_image',
         'item_obs',
+        'item_quantity',
+        'item_min_quantity',
+        'item_max_quantity',
         'item_active'
     ];
 }
