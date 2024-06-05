@@ -19,19 +19,8 @@ class EditProduct extends EditRecord
         ];
     }
 
-    protected function getSaveFormAction(): Action
+    protected function getFormActions(): array
     {
-        return Action::make('save')
-            ->label('Gravar')
-            ->submit('save')
-            ->keyBindings(['mod+s']);
-    }
-
-    protected function getCancelFormAction(): Action
-    {
-        return Action::make('cancel')
-            ->label('Cancelar')
-            ->alpineClickHandler('document.referrer ? window.history.back() : (window.location.href = ' . Js::from($this->previousUrl ?? static::getResource()::getUrl()) . ')')
-            ->color('gray');
+        return [];
     }
 }

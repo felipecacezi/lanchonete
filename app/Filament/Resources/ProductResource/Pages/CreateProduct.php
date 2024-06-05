@@ -20,11 +20,7 @@ class CreateProduct extends CreateRecord
 
     protected function getFormActions(): array
     {
-        return [
-            $this->getCreateFormAction(),
-            ...(static::canCreateAnother() ? [$this->getCreateAnotherFormAction()] : []),
-            $this->getCancelFormAction(),
-        ];
+        return [];
     }
 
     protected function getCreateFormAction(): Action

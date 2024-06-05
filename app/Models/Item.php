@@ -20,4 +20,10 @@ class Item extends Model
         'item_max_quantity',
         'item_active'
     ];
+
+
+    public function itemsProduct()
+    {
+        return $this->belongsToMany(ItemProduct::class);
+    }
 }

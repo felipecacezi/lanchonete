@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
+use App\Models\Item;
 use App\Models\Product;
 use App\Models\Supplier;
 use Filament\Forms;
@@ -18,6 +19,11 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\RichEditor;
 use Leandrocfe\FilamentPtbrFormFields\Money;
+use Filament\Forms\Components\Wizard;
+use Filament\Forms\Components\Wizard\Step;
+use Filament\Forms\Components\Repeater;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\Blade;
 
 class ProductResource extends Resource
 {
@@ -37,65 +43,100 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('category_id')
-                    ->label('Categoria')
-                    ->options(Category::all()->pluck('cat_name', 'id'))
-                    ->searchable(),
-                Forms\Components\TextInput::make('product_name')
-                    ->required()
-                    ->label('Nome')
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('product_code')
-                    ->required()
-                    ->label('Codigo')
-                    ->maxLength(4),
-                RichEditor::make('product_description')->disableToolbarButtons([
-                    'attachFiles',
-                    'blockquote',
-                    'bold',
-                    'bulletList',
-                    'codeBlock',
-                    'h2',
-                    'h3',
-                    'italic',
-                    'link',
-                    'orderedList',
-                    'redo',
-                    'strike',
-                    'underline',
-                    'undo',
-                ])->label('Descricao'),
-                RichEditor::make('product_obs')->disableToolbarButtons([
-                    'attachFiles',
-                    'blockquote',
-                    'bold',
-                    'bulletList',
-                    'codeBlock',
-                    'h2',
-                    'h3',
-                    'italic',
-                    'link',
-                    'orderedList',
-                    'redo',
-                    'strike',
-                    'underline',
-                    'undo',
-                ])->label('Observacoes'),
-                Money::make('product_price')
-                    ->label('Preco')
-                    ->required(),
-                Forms\Components\FileUpload::make('product_image')
-                    ->label('Imagem')
-                    ->disk('public')
-                    ->directory('/public/products')
-                    ->previewable(true)
-                    ->image(),
-                Toggle::make('product_active')
-                    ->label('Ativo')
-                    ->onColor('success')
-                    ->offColor('danger')
-                    ->default(true)
-                    ->required(),    
+
+                Wizard::make([
+                    Step::make('Produto')
+                        ->schema([
+                            Select::make('category_id')
+                                ->label('Categoria')
+                                ->options(Category::all()->pluck('cat_name', 'id'))
+                                ->searchable(),
+                            Forms\Components\TextInput::make('product_name')
+                                ->required()
+                                ->label('Nome')
+                                ->maxLength(100),
+                            Forms\Components\TextInput::make('product_code')
+                                ->required()
+                                ->label('Codigo')
+                                ->maxLength(4),
+                            RichEditor::make('product_description')->disableToolbarButtons([
+                                'attachFiles',
+                                'blockquote',
+                                'bold',
+                                'bulletList',
+                                'codeBlock',
+                                'h2',
+                                'h3',
+                                'italic',
+                                'link',
+                                'orderedList',
+                                'redo',
+                                'strike',
+                                'underline',
+                                'undo',
+                            ])->label('Descricao'),
+                            RichEditor::make('product_obs')->disableToolbarButtons([
+                                'attachFiles',
+                                'blockquote',
+                                'bold',
+                                'bulletList',
+                                'codeBlock',
+                                'h2',
+                                'h3',
+                                'italic',
+                                'link',
+                                'orderedList',
+                                'redo',
+                                'strike',
+                                'underline',
+                                'undo',
+                            ])->label('Observacoes'),
+                            Money::make('product_price')
+                                ->label('Preco')
+                                ->required(),
+                            Forms\Components\FileUpload::make('product_image')
+                                ->label('Imagem')
+                                ->disk('public')
+                                ->directory('/public/products')
+                                ->previewable(true)
+                                ->image(),
+                            Toggle::make('product_active')
+                                ->label('Ativo')
+                                ->onColor('success')
+                                ->offColor('danger')
+                                ->default(true)
+                                ->required(),
+                        ]),
+                    Step::make('Itens')
+                        ->schema([                                
+                            Repeater::make('itemsProduct')
+                                ->relationship()
+                                ->schema([
+                                    Select::make('item_id')
+                                        ->label('Item')
+                                        ->options(Item::all()->pluck('item_name', 'id'))
+                                        ->searchable()
+                                        ->required(),
+                                    Money::make('item_product_quantity')
+                                        ->label('Quantidade')
+                                        ->prefix(null)
+                                        ->required()
+                                ])
+                        ]),
+                ])->submitAction(
+                    new HtmlString(
+                        Blade::render(<<<BLADE
+                                            <x-filament::button
+                                                type="submit"
+                                                size="sm">
+                                                Gravar
+                                            </x-filament::button>
+                                        BLADE)
+                    )
+                )
+
+
+                    
             ])->columns(1);
     }
 
