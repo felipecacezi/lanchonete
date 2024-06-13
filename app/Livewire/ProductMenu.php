@@ -10,12 +10,15 @@ class ProductMenu extends Component
     public $obs = '';
     public $price = 0;
     public $itemQuantity = 0;
+    public $id = 0;
+    public $productImage = '';
 
     public function render()
     {
         return view(
             'livewire.product-menu',
             [
+                'id' => $this->id,
                 'productName' => $this->productName,
                 'obs' => $this->obs,
                 'price' => $this->price

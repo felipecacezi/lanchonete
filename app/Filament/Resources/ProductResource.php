@@ -115,12 +115,10 @@ class ProductResource extends Resource
                                     Select::make('item_id')
                                         ->label('Item')
                                         ->options(Item::all()->pluck('item_name', 'id'))
-                                        ->searchable()
-                                        ->required(),
+                                        ->searchable(),
                                     Money::make('item_product_quantity')
                                         ->label('Quantidade')
                                         ->prefix(null)
-                                        ->required()
                                 ])
                         ]),
                 ])->submitAction(

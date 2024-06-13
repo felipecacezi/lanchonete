@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('app')
             ->path('/')
-            ->login()
+            ->login(\Filament\Pages\Auth\Login::class)
             ->registration()
             ->passwordReset()           
             ->colors([
